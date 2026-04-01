@@ -1,5 +1,6 @@
 package com.example.calculator.controler;
 
+import com.example.calculator.service.CalculatorService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -7,32 +8,29 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class CalculatorController {
 
-    @GetMapping("/add")
-    public int add(@RequestParam int a, @RequestParam int b){
+    private final CalculatorService calculatorService;
 
-        return a + b;
+    public CalculatorController(CalculatorService calculatorService) {
+        this.calculatorService = calculatorService;
+    }
+
+    @GetMapping("/add")
+    public int add(@RequestParam int a, @RequestParam int b) {
+        return calculatorService.add(a, b);
     }
 
     @GetMapping("/subtract")
-    public int subtract(@RequestParam int a, @RequestParam int b){
-
-        return a - b;
+    public int subtract(@RequestParam int a, @RequestParam int b) {
+        return calculatorService.subtract(a, b);
     }
 
     @GetMapping("/multiply")
-    public int multiply(@RequestParam int a, @RequestParam int b){
-
-        return a * b;
+    public int multiply(@RequestParam int a, @RequestParam int b) {
+        return calculatorService.multiply(a, b);
     }
 
     @GetMapping("/divide")
-    public String divide(@RequestParam int a, @RequestParam int b){
-        if (b == 0){
-            return "На нуль ділити не можна";
-        }
-
-        int result = a / b;
-        return " "  + result;
+    public String divide(@RequestParam int a, @RequestParam int b) {
+        return calculatorService.divide(a, b);
     }
-
 }
